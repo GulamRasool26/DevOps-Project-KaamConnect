@@ -15,3 +15,9 @@ Pull requests are reviewed within one working day.
 ## Workflow
 - No direct pushes to main. Every change goes through a pull request with 1 approval.
 - Branch names: type/short-description (for example feature/login-page).
+
+## devops-pipeline build tool
+
+Renders Markdown sources into HTML pages.
+
+    npx devops-build SOURCE.md DEST.html
