@@ -7,12 +7,15 @@
     "test": "test"
   },
   "scripts": {
-    "test": "node --test",
-    "build": "node tools/build.js"
+    "build": "node tools/build.js",
+    "test": "node --test"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "dependencies": {
+    "markdown-it": "^15.0.3"
+  },
   "bin": {
     "devops-build": "tools/build.js"
   },
@@ -20,12 +23,9 @@
     "tools/",
     "README.md"
   ],
-  "dependencies": {
-    "markdown-it": "^15.0.3"
-  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/GulamRasool26/DevOps-Project-KaamConnect.git"
+    "url": "git+https://github.com/gulamrasool26/DevOps-Project-KaamConnect.git"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
