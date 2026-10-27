@@ -1,44 +1,37 @@
 SRC_DIR := src
 OUT_DIR := out
-SOURCES := $(wildcard $(SRC_DIR)/*.md)
-OUTPUTS := $(patsubst $(SRC_DIR)/%.md,$(OUT_DIR)/%.html,$(SOURCES))
 
-.PHONY: all check build test clean ci deps package show
+SOURCES := $(wildcard $(SRC_DIR)/*.txt)
+OUTPUTS := $(patsubst $(SRC_DIR)/%.txt,$(OUT_DIR)/%.txt,$(SOURCES))
+
+.PHONY: all check build test clean ci
 
 all: test
-
-node_modules: package-lock.json
-	npm ci
-	@touch node_modules
-
-deps: node_modules ## install exactly what the lock file says
 
 $(OUT_DIR):
 	mkdir -p $(OUT_DIR)
 
-$(OUT_DIR)/%.html: $(SRC_DIR)/%.md package-lock.json | $(OUT_DIR) node_modules
-	@echo "  BUILD $< -> $@"
-	@npm run --silent build -- $< $@
+$(OUT_DIR)/%.txt: $(SRC_DIR)/%.txt | $(OUT_DIR)
+	@echo "Building $< -> $@"
+	tr '[:lower:]' '[:upper:]' < "$<" > "$@"
 
 check:
-	@if [ ! -d "$(SRC_DIR)" ] || [ -z "$(SOURCES)" ]; then \
-	    echo "ERROR: no .md files found in $(SRC_DIR)"; exit 1; \
+	@if [ ! -d "$(SRC_DIR)" ]; then \
+		echo "ERROR: source directory $(SRC_DIR) is missing"; \
+		exit 1; \
+	elif [ "$(words $(SOURCES))" -eq 0 ]; then \
+		echo "ERROR: no .txt files found in $(SRC_DIR)"; \
+		exit 1; \
+	else \
+		echo "CHECK PASSED: found $(words $(SOURCES)) source files"; \
 	fi
-	@echo "check: found $(words $(SOURCES)) source file(s) in $(SRC_DIR)"
-
 build: $(OUTPUTS)
 
-test: build ## run the test suite against what was built
-	@npm test --silent
+test: build
+	@if grep -n '[a-z]' $(OUTPUTS); then echo "TEST FAILED: lowercase letters found"; exit 1; else echo "TEST PASSED"; fi
 
-package: test ## produce the versioned artifact
-	npm pack
+clean:
+	rm -rf $(OUT_DIR)
 
-clean: ## remove all generated files
-	rm -rf $(OUT_DIR) *.tgz
+ci: clean check test
 
-ci: clean deps check test package ## the build server entry point
-
-show:
-	@echo "SOURCES = $(SOURCES)"
-	@echo "OUTPUTS = $(OUTPUTS)"

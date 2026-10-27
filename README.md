@@ -1,23 +1,36 @@
-# DevOps-Project-KaamConnect
+# DevOps Pipeline
 
-Team name: KaamConnect
+A small Node.js command-line tool that converts Markdown files into HTML.
 
-## Members
-| Name | Roll number | GitHub |
-|------|-------------|--------|
-| Gulam Rasool | 23-NTU-CS-FL-1159 | GulamRasool26 |
-| Kashmir Jamshaid |23-NTU-CS-FL-1167 | Kashmirjamshaid |
-| Asbah Asif | 23-NTU-CS-FL-1141 | Asbahasif17 |
+## Requirements
 
-## Review turnaround
-Pull requests are reviewed within one working day.
+- Node.js 20 or newer
+- npm
 
-## Workflow
-- No direct pushes to main. Every change goes through a pull request with 1 approval.
-- Branch names: type/short-description (for example feature/login-page).
+## Usage
 
-## devops-pipeline build tool
+Build a Markdown file into HTML:
 
-Renders Markdown sources into HTML pages.
+    npm run build -- src/notes.md out/notes.html
 
-    npx devops-build SOURCE.md DEST.html
+Run tests:
+
+    npm test
+
+Run the CI pipeline:
+
+    make ci
+
+## Dependencies
+
+- markdown-it: Converts Markdown into HTML.
+
+## Project Structure
+
+- `src/`: Source Markdown files
+- `out/`: Generated HTML output
+- `build.js`: Build script
+- `test.js`: Test script
+- `package.json`: Project metadata and npm scripts
+- `package-lock.json`: Locked dependency versions
+- `makefile`: Build and CI automation

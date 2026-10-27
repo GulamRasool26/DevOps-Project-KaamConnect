@@ -1,11 +1,9 @@
 # Build output and logs
-out/
 dist/
 build/
 *.log
 
 # Dependencies
-node_modules/
 __pycache__/
 *.pyc
 venv/
@@ -20,9 +18,8 @@ venv/
 *.swp
 *~
 .DS_Store
-node_modules/
-out/
-*.tgz
+
+# Lab 05 generated files
 node_modules/
 out/
 *.tgz
