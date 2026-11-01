@@ -17,3 +17,11 @@ test('every page is real HTML and not raw Markdown', () => {
     assert.doesNotMatch(html, /^# /m);
   }
 });
+
+test('page titles are capitalised words', () => {
+  for (const p of pages) {
+    const html = fs.readFileSync('out/' + p, 'utf8');
+    const t = html.match(/<title>(.*)<\/title>/)[1];
+    assert.match(t, /^[A-Z][a-z]/);
+  }
+});
