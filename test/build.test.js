@@ -17,3 +17,7 @@ test('every page is real HTML and not raw Markdown', () => {
     assert.doesNotMatch(html, /^# /m);
   }
 });
+
+test('the notes page exists', () => {
+  assert.ok(fs.existsSync('out/notes.html'));
+});
