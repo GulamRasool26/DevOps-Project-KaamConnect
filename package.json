@@ -22,9 +22,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-  "markdown-it": "^15.0.3",
-  "js-yaml": "^4.1.0"
-},
+    "markdown-it": "^15.0.3"
+  },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
   }
