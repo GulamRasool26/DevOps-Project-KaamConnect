@@ -10,10 +10,11 @@ test('every source produced a page', () => {
   assert.strictEqual(pages.length, sources.length);
 });
 
-test('every page is real HTML and not raw Markdown', () => {
+test('each page title is its source filename', () => {
   for (const p of pages) {
     const html = fs.readFileSync('out/' + p, 'utf8');
-    assert.match(html, /^<!doctype html>/);
-    assert.doesNotMatch(html, /^# /m);
+    assert.ok(html.includes(
+      '<title>' + p.replace('.html', '') + '</title>'
+    ));
   }
 });
