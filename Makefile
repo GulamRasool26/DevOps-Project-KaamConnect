@@ -3,7 +3,7 @@ OUT_DIR := out
 SOURCES := $(wildcard $(SRC_DIR)/*.md)
 OUTPUTS := $(patsubst $(SRC_DIR)/%.md,$(OUT_DIR)/%.html,$(SOURCES))
 
-.PHONY: all deps check build test package clean ci
+.PHONY: all deps check lint build test package clean ci
 
 all: build
 
@@ -35,4 +35,7 @@ package: test ## produce the versioned artifact
 clean: ## remove all generated files
 	rm -rf $(OUT_DIR) *.tgz
 
-ci: clean deps check test package ## the build server entry point
+ci: clean deps check lint test package ## the build server entry point
+
+lint: node_modules ## static analysis: seconds, so it runs first
+	npm run --silent lint
