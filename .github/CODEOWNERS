@@ -1,0 +1,6 @@
+# Every change needs a review from the owner
+*                       @kashmirjamshaid
+
+# Pipeline and build files: changes here affect everyone
+/.github/workflows/     @kashmirjamshaid
+/Makefile               @kashmirjamshaid
