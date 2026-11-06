@@ -34,3 +34,4 @@ Run the CI pipeline:
 - `package.json`: Project metadata and npm scripts
 - `package-lock.json`: Locked dependency versions
 - `makefile`: Build and CI automation
+
