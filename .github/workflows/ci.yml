@@ -16,8 +16,7 @@ jobs:
         with:
           node-version: '22'
           cache: npm
-      - name: Static analysis
-        run: make lint
+      - run: make lint
   test:
     name: test
     needs: lint
@@ -29,11 +28,31 @@ jobs:
         with:
           node-version: '22'
           cache: npm
-      - name: Build and test
-        run: make test
+      - run: make coverage
+      - uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: coverage/lcov.info
+          if-no-files-found: error
+  analyse:
+    name: analyse
+    needs: test
+    if: github.event_name != 'schedule'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/download-artifact@v4
+        with:
+          name: coverage
+          path: coverage
+      - uses: SonarSource/sonarqube-scan-action@v8
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   package:
     name: package
-    needs: test
+    needs: [test, analyse]
     if: github.event_name != 'schedule'
     runs-on: ubuntu-24.04
     steps:
@@ -42,32 +61,12 @@ jobs:
         with:
           node-version: '22'
           cache: npm
-      - name: Package
-        run: make package
+      - run: make package
       - uses: actions/upload-artifact@v4
         with:
           name: devops-pipeline
           path: '*.tgz'
           if-no-files-found: error
-  sonar:
-    name: sonar
-    needs: test
-    if: github.event_name != 'schedule'
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0   # Sonar needs full history for blame and new-code detection
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          cache: npm
-      - name: Tests with coverage
-        run: make coverage
-      - name: SonarQube scan
-        uses: SonarSource/sonarqube-scan-action@v6
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   audit:
     name: dependency-audit
     runs-on: ubuntu-24.04
