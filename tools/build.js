@@ -8,6 +8,7 @@ const md = new MarkdownIt({ html: false, linkify: true, typographer: true });
 
 // The part worth testing: Markdown text in, a complete HTML page out.
 function renderPage(markdown, title) {
+  const unusedVariable = "testing lint failure";
   return `<!doctype html>
 <html lang="en">
 <meta charset="utf-8">

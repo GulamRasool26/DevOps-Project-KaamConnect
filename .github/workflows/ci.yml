@@ -33,6 +33,7 @@ jobs:
           name: coverage
           path: coverage/lcov.info
           if-no-files-found: error
+          retention-days: 7
   analyse:
     name: analyse
     needs: test
@@ -64,6 +65,7 @@ jobs:
           name: devops-pipeline
           path: '*.tgz'
           if-no-files-found: error
+          retention-days: 7
   audit:
     name: dependency-audit
     runs-on: ubuntu-24.04
