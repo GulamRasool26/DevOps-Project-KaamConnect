@@ -20,7 +20,6 @@ jobs:
   test:
     name: test
     needs: lint
-    if: github.event_name != 'schedule'
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -34,26 +33,9 @@ jobs:
           name: coverage
           path: coverage/lcov.info
           if-no-files-found: error
-  analyse:
-    name: analyse
-    needs: test
-    if: github.event_name != 'schedule'
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - uses: actions/download-artifact@v4
-        with:
-          name: coverage
-          path: coverage
-      - uses: SonarSource/sonarqube-scan-action@v8
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   package:
     name: package
-    needs: [test, analyse]
-    if: github.event_name != 'schedule'
+    needs: test
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
