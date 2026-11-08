@@ -43,14 +43,5 @@ lint: node_modules ## static analysis: seconds, so it runs first
 coverage: build ## the tests again, writing coverage/lcov.info for SonarQube
 	@mkdir -p coverage
 	node --test --experimental-test-coverage \
-	  --test-reporter=spec --test-reporter-destination=stdout \
-	  --test-reporter=lcov --test-reporter-destination=coverage/lcov.info
-
-lint: node_modules ## static analysis: seconds, so it runs first
-	npm run --silent lint
-
-coverage: build ## the tests again, writing coverage/lcov.info for SonarQube
-	@mkdir -p coverage
-	node --test --experimental-test-coverage \
-		--test-reporter=spec --test-reporter-destination=stdout \
-		--test-reporter=lcov --test-reporter-destination=coverage/lcov.info
+	        --test-reporter=spec --test-reporter-destination=stdout \
+	        --test-reporter=lcov --test-reporter-destination=coverage/lcov.info
