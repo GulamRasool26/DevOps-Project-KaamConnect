@@ -8,7 +8,7 @@ const md = new MarkdownIt({ html: false, linkify: true, typographer: true });
 
 // The part worth testing: Markdown text in, a complete HTML page out.
 function renderPage(markdown, title) {
-  return `<!doctype html>
+ return `<!doctype html>
 <html lang="en">
 <meta charset="utf-8">
 <title>${title}</title>
